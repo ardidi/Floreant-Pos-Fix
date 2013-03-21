@@ -20,6 +20,8 @@ public class MessageDialog {
 
 	public static void showError(Throwable t) {
 		logger.error("Error", t);
+                //System.out.print(t.getMessage());
+                t.printStackTrace();
 		JOptionPane.showMessageDialog(Application.getInstance().getBackOfficeWindow(), "An unexpected error has occured, you may need to restart the application", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }

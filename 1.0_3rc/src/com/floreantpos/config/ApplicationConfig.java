@@ -1,11 +1,23 @@
 package com.floreantpos.config;
 
+import static com.floreantpos.config.ApplicationConfig.DATABASE_NAME;
+import static com.floreantpos.config.ApplicationConfig.DATABASE_PASSWORD;
+import static com.floreantpos.config.ApplicationConfig.DATABASE_PORT;
+import static com.floreantpos.config.ApplicationConfig.DATABASE_URL;
+import static com.floreantpos.config.ApplicationConfig.DATABASE_USER;
+import static com.floreantpos.config.ApplicationConfig.checkDatabaseConnection;
+import static com.floreantpos.config.ApplicationConfig.getDatabaseName;
+import static com.floreantpos.config.ApplicationConfig.getDatabasePassword;
+import static com.floreantpos.config.ApplicationConfig.getDatabasePort;
+import static com.floreantpos.config.ApplicationConfig.getDatabaseURL;
+import static com.floreantpos.config.ApplicationConfig.getDatabaseUser;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.prefs.Preferences;
 
-import org.apache.derby.jdbc.ClientDriver;
+//import org.apache.derby.jdbc.ClientDriver;
+import com.mysql.jdbc.Driver;
 
 import com.floreantpos.main.Application;
 
@@ -55,7 +67,7 @@ public class ApplicationConfig {
 	}
 
 	public static String getConnectionURL() {
-		return "jdbc:derby://" + getDatabaseURL() + ":" + getDatabasePort() + "/" + getDatabaseName(); 
+		return "jdbc:mysql://" + getDatabaseURL() + ":" + getDatabasePort() + "/" + getDatabaseName()+"?characterEncoding=UTF-8"; 
 	}
 	
 	public static void setDatabaseURL(String url) {
@@ -95,11 +107,11 @@ public class ApplicationConfig {
 	}
 	
 	public static boolean checkDatabaseConnection(String url, String port, String databaseName, String user, String password) {
-		url = "jdbc:derby://" + url + ":" + port + "/" + databaseName; 
-		
-		new ClientDriver();
+		url = "jdbc:mysql://" + url + ":" + port + "/" + databaseName+"?characterEncoding=UTF-8"; 
+		System.out.println(url);
 		Connection connection = null; 
-		try {
+		try {            
+        		new Driver();
 			connection = DriverManager.getConnection(url, user, password);
 			return true;
 		} catch (SQLException e) {
